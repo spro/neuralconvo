@@ -9,6 +9,7 @@ if dataset == nil then
   cmd:option('--cuda', false, 'use CUDA. Training must be done on CUDA')
   cmd:option('--opencl', false, 'use OpenCL. Training must be done on OpenCL')
   cmd:option('--debug', false, 'show debug info')
+  cmd:option('--reverse', false, 'reverse input sequence')
   cmd:text()
   options = cmd:parse(arg)
 
@@ -66,8 +67,13 @@ function say(text)
     table.insert(wordIds, id)
   end
 
-  local input = torch.Tensor(list.reverse(wordIds))
   local wordIds, probabilities = model:eval(input)
+  local input
+  if options.reverse then
+      input = torch.Tensor(list.reverse(wordIds))
+  else
+      input = torch.Tensor(wordIds)
+  end
 
   print(">> " .. pred2sent(wordIds))
 

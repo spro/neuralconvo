@@ -14,6 +14,7 @@ cmd:option('--minLR', 0.00001, 'minimum learning rate')
 cmd:option('--saturateEpoch', 20, 'epoch at which linear decayed LR will reach minLR')
 cmd:option('--maxEpoch', 50, 'maximum number of epochs to run')
 cmd:option('--batchSize', 1000, 'number of examples to load at once')
+cmd:option('--reverse', false, 'reverse input sequence')
 
 cmd:text()
 options = cmd:parse(arg)
@@ -27,7 +28,8 @@ print("-- Loading dataset")
 dataset = neuralconvo.DataSet(neuralconvo.CornellMovieDialogs("data/cornell_movie_dialogs"),
                     {
                       loadFirst = options.dataset,
-                      minWordFreq = options.minWordFreq
+                      minWordFreq = options.minWordFreq,
+                      reverse = options.reverse
                     })
 
 print("\nDataset stats:")

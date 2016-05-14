@@ -29,6 +29,9 @@ function DataSet:__init(loader, options)
   -- Load only first fews examples (approximately)
   self.loadFirst = options.loadFirst
 
+  -- Reverse inputs
+  self.reverse = options.reverse
+
   self.examples = {}
   self.word2id = {}
   self.id2word = {}
@@ -179,8 +182,10 @@ function DataSet:visitConversation(lines, start)
       local targetIds = self:visitText(target.text, 2)
 
       if inputIds and targetIds then
-        -- Revert inputs
-        inputIds = list.reverse(inputIds)
+
+        if self.reverse then
+          inputIds = list.reverse(inputIds)
+        end
 
         table.insert(targetIds, 1, self.goToken)
         table.insert(targetIds, self.eosToken)
