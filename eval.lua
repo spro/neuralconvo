@@ -10,6 +10,7 @@ if dataset == nil then
   cmd:option('--opencl', false, 'use OpenCL. Training must be done on OpenCL')
   cmd:option('--debug', false, 'show debug info')
   cmd:option('--reverse', false, 'reverse input sequence')
+  cmd:option('--model', "data/model.t7", 'model filename')
   cmd:text()
   options = cmd:parse(arg)
 
@@ -27,8 +28,8 @@ if dataset == nil then
 end
 
 if model == nil then
-  print("-- Loading model")
-  model = torch.load("data/model.t7")
+  print("Loading model from " .. options.model .. " ...")
+  model = torch.load(options.model)
 end
 
 -- Word IDs to sentence
