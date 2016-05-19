@@ -15,6 +15,8 @@ cmd:option('--saturateEpoch', 20, 'epoch at which linear decayed LR will reach m
 cmd:option('--maxEpoch', 50, 'maximum number of epochs to run')
 cmd:option('--batchSize', 1000, 'number of examples to load at once')
 cmd:option('--no-reverse', false, "don't reverse input sequence")
+cmd:option('--model', "data/model.t7", 'model filename')
+cmd:option('--vocab', "data/vocab.t7", 'vocab filename')
 
 cmd:text()
 options = cmd:parse(arg)
@@ -30,7 +32,8 @@ dataset = neuralconvo.DataSet(neuralconvo.CornellMovieDialogs("data/cornell_movi
                     {
                       loadFirst = options.dataset,
                       minWordFreq = options.minWordFreq,
-                      reverse = options.reverse
+                      reverse = options.reverse,
+                      vocab = options.vocab
                     })
 
 print("\nDataset stats:")
@@ -111,8 +114,8 @@ for epoch = 1, options.maxEpoch do
 
   -- Save the model if it improved.
   if minMeanError == nil or errors:mean() < minMeanError then
-    print("\n(Saving model ...)")
-    torch.save("data/model.t7", model)
+    print("\n(Saving model to " .. options.model .. " ...)")
+    torch.save(options.model, model)
     minMeanError = errors:mean()
   end
 
