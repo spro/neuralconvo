@@ -14,7 +14,7 @@ cmd:option('--minLR', 0.00001, 'minimum learning rate')
 cmd:option('--saturateEpoch', 20, 'epoch at which linear decayed LR will reach minLR')
 cmd:option('--maxEpoch', 50, 'maximum number of epochs to run')
 cmd:option('--batchSize', 1000, 'number of examples to load at once')
-cmd:option('--reverse', false, 'reverse input sequence')
+cmd:option('--no-reverse', false, "don't reverse input sequence")
 
 cmd:text()
 options = cmd:parse(arg)
@@ -22,6 +22,7 @@ options = cmd:parse(arg)
 if options.dataset == 0 then
   options.dataset = nil
 end
+options.reverse = not options['no-reverse']
 
 -- Data
 print("-- Loading dataset")

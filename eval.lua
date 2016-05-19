@@ -9,10 +9,11 @@ if dataset == nil then
   cmd:option('--cuda', false, 'use CUDA. Training must be done on CUDA')
   cmd:option('--opencl', false, 'use OpenCL. Training must be done on OpenCL')
   cmd:option('--debug', false, 'show debug info')
-  cmd:option('--reverse', false, 'reverse input sequence')
+  cmd:option('--no-reverse', false, "don't reverse input sequence")
   cmd:option('--model', "data/model.t7", 'model filename')
   cmd:text()
   options = cmd:parse(arg)
+  options.reverse = not options['no-reverse']
 
   -- Data
   dataset = neuralconvo.DataSet()
