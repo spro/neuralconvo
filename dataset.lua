@@ -19,6 +19,7 @@ function DataSet:__init(loader, options)
   options = options or {}
 
   self.examplesFilename = "data/examples.t7"
+  self.vocabFilename = options.vocab or "data/vocab.t7"
 
   -- Discard words with lower frequency then this
   self.minWordFreq = options.minWordFreq or 1
@@ -41,7 +42,7 @@ function DataSet:__init(loader, options)
 end
 
 function DataSet:load(loader)
-  local filename = "data/vocab.t7"
+  local filename = self.vocabFilename
 
   if path.exists(filename) then
     print("Loading vocabulary from " .. filename .. " ...")

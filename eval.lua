@@ -11,12 +11,13 @@ if dataset == nil then
   cmd:option('--debug', false, 'show debug info')
   cmd:option('--no-reverse', false, "don't reverse input sequence")
   cmd:option('--model', "data/model.t7", 'model filename')
+  cmd:option('--vocab', "data/vocab.t7", 'vocab filename')
   cmd:text()
   options = cmd:parse(arg)
   options.reverse = not options['no-reverse']
 
   -- Data
-  dataset = neuralconvo.DataSet()
+  dataset = neuralconvo.DataSet(nil, {vocab=options.vocab})
 
   -- Enabled CUDA
   if options.cuda then
